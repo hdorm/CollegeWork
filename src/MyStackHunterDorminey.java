@@ -8,18 +8,30 @@ import java.util.ArrayList;
 
 public class MyStackHunterDorminey<E> {
 
-    ArrayList<E> Assignment = new ArrayList<E>();
+    ArrayList<E> Stack = new ArrayList<>();
 
-    public static boolean isEmpty(){
-        return true;
+    int top = -1;
+
+    public void push(E element) throws RuntimeException{
+
+        top = top + 1;
+        Stack.add(top, element);
+
     }
 
-    public static int size(){
+    public void pop() throws RuntimeException{
+    }
+
+    public ArrayList<E> peek() throws RuntimeException{
+        return peek();
+    }
+
+    public int size(){
         return 5;
     }
 
-    public ArrayList<E> peek(ArrayList<E> Assignment){
-        return peek(Assignment);
+    public boolean isEmpty(){
+        return true;
     }
 
 }
