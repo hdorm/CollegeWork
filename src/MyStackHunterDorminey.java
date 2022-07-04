@@ -5,25 +5,31 @@
 // IDE: 		    IntelliJ, JDK 18.0.1
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyStackHunterDorminey<E> {
 
-    ArrayList<E> Stack = new ArrayList<>();
+    public List<E> stack = new ArrayList<>();
 
     int top = -1;
 
     public void push(E element) throws RuntimeException{
 
         top = top + 1;
-        Stack.add(top, element);
+        stack.add(element);
 
     }
 
-    public void pop() throws RuntimeException{
+    public E pop() throws RuntimeException{
+
+        int pop = top;
+        top = top - 1;
+        return stack.get(pop);
+
     }
 
-    public ArrayList<E> peek() throws RuntimeException{
-        return peek();
+    public E peek() throws RuntimeException{
+        return stack.get(top);
     }
 
     public int size(){
@@ -31,7 +37,8 @@ public class MyStackHunterDorminey<E> {
     }
 
     public boolean isEmpty(){
-        return true;
+        return stack.size() == 0;
     }
 
 }
+
