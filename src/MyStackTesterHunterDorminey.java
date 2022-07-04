@@ -22,18 +22,20 @@ public class MyStackTesterHunterDorminey {
 
     public static void main(String[] args) {
 
-        // Checking addFirst() correctly works
+        // Checking peek() and push() correctly works
         try {
             stackTesterOne(); // add first must work because it is given by me.
         }catch(Exception e) {
             showExceptionMessage("1");
         }
-        // Checking addLast() correctly works
+        // Checking isEmpty() correctly works
         try {stackTesterTwo();} catch(Exception e) {showExceptionMessage("2");}
-        // Checking addLast() correctly works
+        // Checking pop() correctly works
         try {stackTesterThree();} catch(Exception e) {showExceptionMessage("2");}
-        // Checking addLast() correctly works
-        try {linkedListIteratorTest1();} catch(Exception e) {showExceptionMessage("Iterator");}
+        // Checking size() correctly works
+        try {stackTesterFour();} catch(Exception e) {showExceptionMessage("2");}
+        // Checking toString() correctly works
+        try {stackTesterFive();} catch(Exception e) {showExceptionMessage("2");}
     }
 
     public static void stackTesterOne() {
@@ -41,14 +43,14 @@ public class MyStackTesterHunterDorminey {
         MyStackHunterDorminey<String> myStack = new MyStackHunterDorminey<>();
 
         myStack.push("CC");
-        System.out.println(myStack.peek() + "  <-- Your Top");
-        System.out.println("CC  <-- Correct Top");
+        System.out.println(myStack.peek() + "  <-- Your top");
+        System.out.println("CC  <-- Correct top");
         myStack.push("BB");
-        System.out.println(myStack.peek() + "  <-- Your Top");
-        System.out.println("BB  <-- Correct Top");
+        System.out.println(myStack.peek() + "  <-- Your top");
+        System.out.println("BB  <-- Correct top");
         myStack.push("AA");
-        System.out.println(myStack.peek() + "  <-- Your Top");
-        System.out.println("AA  <-- Correct Top");
+        System.out.println(myStack.peek() + "  <-- Your top");
+        System.out.println("AA  <-- Correct top");
     }
 
     public static void stackTesterTwo() {
@@ -59,35 +61,38 @@ public class MyStackTesterHunterDorminey {
     }
 
     public static void stackTesterThree() {
-        printTestName("[2] pop() Tester");
+        printTestName("[3] pop() Tester");
         MyStackHunterDorminey<String> myStack = new MyStackHunterDorminey<>();
 
         myStack.push("CC");
         myStack.push("BB");
         myStack.push("AA");
-        System.out.println("AA  <-- Correct Pop");
-        System.out.println(myStack.pop() + "  <-- Your Pop");
-        System.out.println("AA  <-- Correct Pop");
-        System.out.println(myStack.pop() + "  <-- Your Pop");
-        System.out.println("BB  <-- Correct Pop");
-        System.out.println(myStack.pop() + "  <-- Your Pop");
-        System.out.println("CC  <-- Correct Pop");
+        System.out.println("AA  <-- Correct pop");
+        System.out.println(myStack.pop() + "  <-- Your pop");
+        System.out.println("AA  <-- Correct pop");
+        System.out.println(myStack.pop() + "  <-- Your pop");
+        System.out.println("BB  <-- Correct pop");
+        System.out.println(myStack.pop() + "  <-- Your pop");
+        System.out.println("CC  <-- Correct pop");
     }
 
-    public static void linkedListIteratorTest1() {
-        printTestName("Iterator Tester");
+    public static void stackTesterFour() {
+        printTestName("[4] size() Tester");
+        MyStackHunterDorminey<String> myStack = new MyStackHunterDorminey<>();
 
-        MyLinkedListHunterDorminey<String> myList = new MyLinkedListHunterDorminey<>();
+        myStack.push("CC");
+        myStack.push("BB");
+        myStack.push("AA");
+        System.out.println(myStack.size() + "  <-- Your size");
+    }
 
-        myList.addFirst("JKL");
-        myList.addFirst("GHI");
-        myList.addFirst("DEF");
-        myList.addFirst("ABC");
-        MyLinkedListHunterDorminey<String>.Iterator iter = myList.iterator();
-        while(iter.hasNext()) {
-            System.out.print(iter.next()+" ");
-        }
-        System.out.println(" <-- Your List");
-        System.out.println("ABC DEF GHI JKL  <-- Correct List");
+    public static void stackTesterFive() {
+        printTestName("[5] toString() Tester");
+        MyStackHunterDorminey<String> myStack = new MyStackHunterDorminey<>();
+
+        myStack.push("CC");
+        myStack.push("BB");
+        myStack.push("AA");
+        System.out.println(myStack + "  <-- Your string");
     }
 }

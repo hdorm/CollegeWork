@@ -5,39 +5,48 @@
 // IDE: 		    IntelliJ, JDK 18.0.1
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyStackHunterDorminey<E> {
 
-    public List<E> stack = new ArrayList<>();
+    public ArrayList<E> stack = new ArrayList<>();
 
     int top = -1;
 
-    public void push(E element) throws RuntimeException{
-
+    public void push(E element){
         top = top + 1;
         stack.add(element);
-
     }
 
     public E pop() throws RuntimeException{
-
-        int pop = top;
-        top = top - 1;
-        return stack.get(pop);
-
+        if(stack.size() == 0){
+            throw new RuntimeException("in pop(): no elements in the stack");
+        }
+        else {
+            int pop = top;
+            top = top - 1;
+            return stack.get(pop);
+        }
     }
 
     public E peek() throws RuntimeException{
-        return stack.get(top);
+        if(stack.size() == 0){
+            throw new RuntimeException("in pop(): no elements in the stack");
+        }
+        else {
+            return stack.get(top);
+        }
     }
 
     public int size(){
-        return 5;
+        return stack.size();
     }
 
     public boolean isEmpty(){
         return stack.size() == 0;
+    }
+
+    public String toString(){
+        return stack.toString();
     }
 
 }
