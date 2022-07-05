@@ -33,7 +33,7 @@ public class MyStackHunterDorminey<E> {
 
     public E peek() throws RuntimeException{
         if(size == 0){
-            throw new RuntimeException("in pop(): no elements in the stack");
+            throw new RuntimeException("in peek(): no elements in the stack");
         }
         else {
             return stack.get(top);
