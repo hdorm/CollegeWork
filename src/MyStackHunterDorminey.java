@@ -11,25 +11,28 @@ public class MyStackHunterDorminey<E> {
     public ArrayList<E> stack = new ArrayList<>();
 
     int top = -1;
+    int size = 0;
 
     public void push(E element){
         top = top + 1;
         stack.add(element);
+        size++;
     }
 
     public E pop() throws RuntimeException{
-        if(stack.size() == 0){
+        if(size == 0){
             throw new RuntimeException("in pop(): no elements in the stack");
         }
         else {
             int pop = top;
             top = top - 1;
+            size--;
             return stack.get(pop);
         }
     }
 
     public E peek() throws RuntimeException{
-        if(stack.size() == 0){
+        if(size == 0){
             throw new RuntimeException("in pop(): no elements in the stack");
         }
         else {
@@ -38,11 +41,11 @@ public class MyStackHunterDorminey<E> {
     }
 
     public int size(){
-        return stack.size();
+        return size;
     }
 
     public boolean isEmpty(){
-        return stack.size() == 0;
+        return size == 0;
     }
 
     public String toString(){

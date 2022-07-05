@@ -4,6 +4,8 @@
 // Program Number:	Assignment 2 Part Two
 // IDE: 		    IntelliJ, JDK 18.0.1
 
+import java.util.Scanner;
+
 public class MyStackTesterHunterDorminey {
 
     public static void printTestName(String str) {
@@ -15,27 +17,65 @@ public class MyStackTesterHunterDorminey {
 
     public static void showExceptionMessage(String str) {
         System.out.println("#################################");
-        System.out.println("Exception Occurs in Tester [" + "]");
+        System.out.println("Exception Occurs in Tester [" + str + "]");
         System.out.println("#################################");
         System.out.println();
     }
 
-    public static void main(String[] args) {
+    public static int mainMenu(){
+        int choice;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("-----MAIN MENU-----");
+        System.out.println("0 - Exit Program");
+        System.out.println("1 - Push");
+        System.out.println("2 - Pop");
+        System.out.println("3 - Peek (Top)");
+        System.out.println("4 - Size");
+        System.out.println("5 - Is Empty?");
+        System.out.println("6 - Print Stack");
+        System.out.print("Choose menu: ");
+        choice = scan.nextInt();
+        return choice;
+    }
 
-        // Checking peek() and push() correctly works
-        try {
-            stackTesterOne(); // add first must work because it is given by me.
-        }catch(Exception e) {
-            showExceptionMessage("1");
+    public static void main(String[] args) {
+        String input;
+        int choice = mainMenu();
+        MyStackHunterDorminey<String> myStack = new MyStackHunterDorminey<>();
+        while(choice != 0){
+            if(choice == 1){
+                Scanner scan = new Scanner(System.in);
+                input = scan.nextLine();
+                myStack.push(input);
+                choice = mainMenu();
+            }
+            else if(choice == 2){
+                try{
+                    System.out.println(myStack.pop());
+                    choice = mainMenu();
+                }
+                catch(Exception e){
+                    showExceptionMessage("2");
+                    choice = mainMenu();
+                }
+            }
+            else if(choice == 3){
+                System.out.println(myStack.peek());
+                choice = mainMenu();
+            }
+            else if(choice == 4){
+                System.out.println(myStack.size());
+                choice = mainMenu();
+            }
+            else if(choice == 5){
+                System.out.println(myStack.isEmpty());
+                choice = mainMenu();
+            }
+            else if(choice == 6){
+                System.out.println(myStack);
+                choice = mainMenu();
+            }
         }
-        // Checking isEmpty() correctly works
-        try {stackTesterTwo();} catch(Exception e) {showExceptionMessage("2");}
-        // Checking pop() correctly works
-        try {stackTesterThree();} catch(Exception e) {showExceptionMessage("2");}
-        // Checking size() correctly works
-        try {stackTesterFour();} catch(Exception e) {showExceptionMessage("2");}
-        // Checking toString() correctly works
-        try {stackTesterFive();} catch(Exception e) {showExceptionMessage("2");}
     }
 
     public static void stackTesterOne() {
