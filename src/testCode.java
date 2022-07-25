@@ -1,5 +1,5 @@
 public class testCode {
-    public double averageNumber(int n){
+    public static double averageNumber(int n){
         int sum = 0;
         for(int i=0;i<n;i++){
             sum = sum + i;
@@ -7,7 +7,7 @@ public class testCode {
         return sum / (double) n;
     }
 
-    public void main(String[] args){
-        System.out.println(averageNumber(5));
+    public static void main(String[] args){
+        System.out.println(averageNumber(25));
     }
 }
