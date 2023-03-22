@@ -12,8 +12,6 @@ public class MyLinkedListHunterDorminey <T> {
 	public class Node{
 		T data;
 		Node link;
-		Node(){
-		}
 		Node(T element){
 			data = element;
 			link = null;
@@ -124,11 +122,8 @@ public class MyLinkedListHunterDorminey <T> {
 		public boolean hasNext(){
 			// return true when the [next node] exists
                 	// return false when we don't have the [next node]
-                	if (next != null) {
-                	    return true;
-               	 	}
-                	return false;
-		}
+            return next != null;
+        }
 		
 	}
 	

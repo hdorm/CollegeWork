@@ -79,7 +79,7 @@ public class Queue<E> {
 // Method for front, looks at the 1st element of the Queue and returns that element
 	public E front() {
 		E retVal;
-		if (isEmpty() == false)
+		if (!isEmpty())
 			retVal = head.data;
 		else
 			retVal = null;
@@ -89,10 +89,7 @@ public class Queue<E> {
 
 	// Method for isEmpty(), checks to see if the list is empty
 	public boolean isEmpty() {
-		if (size() == 0)
-			return true;
-		else
-			return false;
+        return size() == 0;
 	}
 
 	// method to print out the Queue
@@ -112,7 +109,7 @@ public class Queue<E> {
 
 	// class to create nodes as objects
 	private class Node {
-		private E data; // data field
+		private final E data; // data field
 		private Node next; // link field
 
 		public Node(E item) // constructor method

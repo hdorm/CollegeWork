@@ -37,6 +37,7 @@ public class QuickSortReverseHunterDorminey {
             recursivePartitionPass(list, left, partitionLocation - 1);
             recursivePartitionPass(list, partitionLocation + 1, right);
         }
+        System.out.println(Arrays.toString(list));
     }
 
     public static void main(String[] args){
