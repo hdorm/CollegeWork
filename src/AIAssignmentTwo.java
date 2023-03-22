@@ -44,9 +44,9 @@ public class AIAssignmentTwo {
         return original.equals(current);
     }
 
-    public static LinkedList<Integer> deepCopy(LinkedList<Integer> list){
+    public static LinkedList<Integer> deepCopy(LinkedList<Integer> list) {
         LinkedList<Integer> copiedList = new LinkedList<>();
-        for(int i = 0; i < 9; i++){
+        for (int i = 0; i < 9; i++) {
             copiedList.add(list.get(i));
         }
         return copiedList;
@@ -57,7 +57,7 @@ public class AIAssignmentTwo {
         return scrambledList;
     }
 
-    public static void populateLists(){
+    public static void populateLists() {
         solvedList.add(1);
         solvedList.add(2);
         solvedList.add(3);
@@ -76,6 +76,15 @@ public class AIAssignmentTwo {
         scrambledList.add(7);
         scrambledList.add(6);
         scrambledList.add(5);
+        solvableList.add(1);
+        solvableList.add(3);
+        solvableList.add(4);
+        solvableList.add(8);
+        solvableList.add(0);
+        solvableList.add(5);
+        solvableList.add(7);
+        solvableList.add(2);
+        solvableList.add(6);
     }
 
     public static int positionOfZero(LinkedList<Integer> list) {
@@ -125,11 +134,12 @@ public class AIAssignmentTwo {
         list.set(i - 1, 0);
     }
 
-    public static void swapUp(LinkedList<Integer> list , int i) {
+    public static void swapUp(LinkedList<Integer> list, int i) {
         int currentUp = list.get(i - 3);
         list.set(i, currentUp);
         list.set(i - 3, 0);
     }
+
     public static void swapDown(LinkedList<Integer> list, int i) {
         int currentDown = list.get(i + 3);
         list.set(i, currentDown);
@@ -169,8 +179,9 @@ public class AIAssignmentTwo {
         reached.put(list, frontier.peek());
         LinkedList<node> expandedNodes;
         while (!frontier.isEmpty()) {
-            if (equalCheck(solvedList, Objects.requireNonNull(frontier.peek()).state)) {
+            if (equalCheck(solvedList, frontier.peek().state)) {
                 currentNode = new node(frontier.peek());
+                printSquare(currentNode.state);
                 while (currentNode.parent != null) {
                     System.out.println(currentNode.action);
                     solutionSteps.add(currentNode.action);
@@ -178,21 +189,18 @@ public class AIAssignmentTwo {
                 }
                 solution.add(currentNode);
                 break;
-            }
-            expandedNodes = expandFunction(Objects.requireNonNull(frontier.poll()));
-            for (node expandedNode : expandedNodes) {
-                if (!reached.containsKey(expandedNode.state) || expandedNode.pathCost < reached.get(expandedNode.state).pathCost) {
-                    System.out.println("Reached does not contain key.");
-                    System.out.println(frontier.size());
-                    printSquare(expandedNode.state);
-                    reached.put(expandedNode.state, expandedNode);
-                    frontier.add(expandedNode);
+            } else {
+                expandedNodes = expandFunction(frontier.poll());
+                for (node expandedNode : expandedNodes) {
+                    node tempNode = new node(expandedNode);
+                    if (!reached.containsKey(tempNode.state) || tempNode.pathCost < reached.get(tempNode.state).pathCost) {
+                        printSquare(tempNode.state);
+                        reached.put(tempNode.state, tempNode);
+                        frontier.add(tempNode);
+                    }
                 }
-                else{
-                    System.out.println("Neither condition is true.");
-                }
+                expandedNodes.clear();
             }
-            expandedNodes.clear();
         }
     }
 
@@ -240,8 +248,6 @@ public class AIAssignmentTwo {
         LinkedList<Integer> newList = randomizeList();
         LinkedList<Integer> randomizedList = deepCopy(newList);
         printSquare(solvedList);
-        printSquare(newList);
-        BFS((newList));
-        printSquare(randomizedList);
+        BFS((randomizedList));
     }
 }
