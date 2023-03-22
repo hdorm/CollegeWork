@@ -163,17 +163,9 @@ public class AIAssignmentTwo {
         System.out.println();
     }
 
-    public static class bestFirstComparator implements Comparator<node> {
-        @Override
-        public int compare(node one, node two) {
-            return Integer.compare(one.pathCost, two.pathCost);
-        }
-    }
-
-    public static void BFS(LinkedList<Integer> list) {
+    public static void DFS(LinkedList<Integer> list) {
         node currentNode = new node(list, null, "Initial", 0);
-        Comparator<node> comparator = new bestFirstComparator();
-        PriorityQueue<node> frontier = new PriorityQueue<>(comparator);
+        LinkedList<node> frontier = new LinkedList<>();
         frontier.add(currentNode);
         Map<LinkedList<Integer>, node> reached = new HashMap<>();
         reached.put(list, frontier.peek());
@@ -201,6 +193,9 @@ public class AIAssignmentTwo {
                 }
                 expandedNodes.clear();
             }
+        }
+        if(frontier.isEmpty()){
+            System.out.println("The puzzle is unsolvable.");
         }
     }
 
@@ -248,6 +243,6 @@ public class AIAssignmentTwo {
         LinkedList<Integer> newList = randomizeList();
         LinkedList<Integer> randomizedList = deepCopy(newList);
         printSquare(solvedList);
-        BFS((randomizedList));
+        DFS((randomizedList));
     }
 }
