@@ -32,13 +32,34 @@ public class AIAssignmentTwo {
         }
     }
 
-    public static LinkedList<node> solution = new LinkedList<>();
-    public static LinkedList<String> solutionSteps = new LinkedList<>();
+    static class UCSComparator implements Comparator<node> {
+        public int compare(node nodeOne, node nodeTwo) {
+            if (nodeOne.pathCost < nodeTwo.pathCost) {
+                return -1;
+            } else if (nodeOne.pathCost > nodeTwo.pathCost) {
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+    static class DFSComparator implements Comparator<node> {
+        public int compare(node nodeOne, node nodeTwo) {
+            if (nodeOne.pathCost < nodeTwo.pathCost) {
+                return 1;
+            } else if (nodeOne.pathCost > nodeTwo.pathCost) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    public static int UCSNodesVisited = 0;
+    public static int DFSNodesVisited = 0;
     public static LinkedList<Integer> solvedList = new LinkedList<>();
     public static LinkedList<Integer> scrambledList = new LinkedList<>();
     public static String[] positions = {"top-left", "top-mid", "top-right", "mid-left", "mid", "mid-right", "bot-left",
             "bot-mid", "bot-right"};
-    public static LinkedList<Integer> solvableList = new LinkedList<>();
 
     public static boolean equalCheck(LinkedList<Integer> original, LinkedList<Integer> current) {
         return original.equals(current);
@@ -76,15 +97,6 @@ public class AIAssignmentTwo {
         scrambledList.add(7);
         scrambledList.add(6);
         scrambledList.add(5);
-        solvableList.add(1);
-        solvableList.add(3);
-        solvableList.add(4);
-        solvableList.add(8);
-        solvableList.add(0);
-        solvableList.add(5);
-        solvableList.add(7);
-        solvableList.add(2);
-        solvableList.add(6);
     }
 
     public static int positionOfZero(LinkedList<Integer> list) {
@@ -163,9 +175,9 @@ public class AIAssignmentTwo {
         System.out.println();
     }
 
-    public static void DFS(LinkedList<Integer> list) {
+    public static int UCS(LinkedList<Integer> list) {
         node currentNode = new node(list, null, "Initial", 0);
-        LinkedList<node> frontier = new LinkedList<>();
+        PriorityQueue<node> frontier = new PriorityQueue<>(new UCSComparator());
         frontier.add(currentNode);
         Map<LinkedList<Integer>, node> reached = new HashMap<>();
         reached.put(list, frontier.peek());
@@ -173,20 +185,17 @@ public class AIAssignmentTwo {
         while (!frontier.isEmpty()) {
             if (equalCheck(solvedList, frontier.peek().state)) {
                 currentNode = new node(frontier.peek());
-                printSquare(currentNode.state);
                 while (currentNode.parent != null) {
                     System.out.println(currentNode.action);
-                    solutionSteps.add(currentNode.action);
                     currentNode = new node(currentNode.parent);
                 }
-                solution.add(currentNode);
                 break;
             } else {
                 expandedNodes = expandFunction(frontier.poll());
                 for (node expandedNode : expandedNodes) {
+                    UCSNodesVisited += 1;
                     node tempNode = new node(expandedNode);
                     if (!reached.containsKey(tempNode.state) || tempNode.pathCost < reached.get(tempNode.state).pathCost) {
-                        printSquare(tempNode.state);
                         reached.put(tempNode.state, tempNode);
                         frontier.add(tempNode);
                     }
@@ -194,9 +203,44 @@ public class AIAssignmentTwo {
                 expandedNodes.clear();
             }
         }
-        if(frontier.isEmpty()){
+        if (frontier.isEmpty()) {
             System.out.println("The puzzle is unsolvable.");
         }
+        return UCSNodesVisited;
+    }
+
+    public static int DFS(LinkedList<Integer> list) {
+        node currentNode = new node(list, null, "Initial", 0);
+        PriorityQueue<node> frontier = new PriorityQueue<>(new DFSComparator());
+        frontier.add(currentNode);
+        Map<LinkedList<Integer>, node> reached = new HashMap<>();
+        reached.put(list, frontier.peek());
+        LinkedList<node> expandedNodes;
+        while (!frontier.isEmpty()) {
+            if (equalCheck(solvedList, frontier.peek().state)) {
+                currentNode = new node(frontier.peek());
+                while (currentNode.parent != null) {
+                    System.out.println(currentNode.action);
+                    currentNode = new node(currentNode.parent);
+                }
+                break;
+            } else {
+                expandedNodes = expandFunction(frontier.poll());
+                for (node expandedNode : expandedNodes) {
+                    DFSNodesVisited += 1;
+                    node tempNode = new node(expandedNode);
+                    if (!reached.containsKey(tempNode.state)) {
+                        reached.put(tempNode.state, tempNode);
+                        frontier.add(tempNode);
+                    }
+                }
+                expandedNodes.clear();
+            }
+        }
+        if (frontier.isEmpty()) {
+            System.out.println("The puzzle is unsolvable.");
+        }
+        return DFSNodesVisited;
     }
 
     public static LinkedList<node> expandFunction(final node parentNode) {
@@ -243,6 +287,10 @@ public class AIAssignmentTwo {
         LinkedList<Integer> newList = randomizeList();
         LinkedList<Integer> randomizedList = deepCopy(newList);
         printSquare(solvedList);
-        DFS((randomizedList));
+        System.out.println("DFS Results:");
+        System.out.println("Nodes visited: " + DFS(deepCopy(randomizedList)));
+        System.out.println();
+        System.out.println("UCS Results:");
+        System.out.println("Nodes visited: " + UCS(deepCopy(randomizedList)));
     }
 }
